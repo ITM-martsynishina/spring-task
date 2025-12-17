@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>Name</th>
+        <th>Lastname</th>
+        <th>Email</th>
+        <th>Birthdate</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${#lists.isEmpty(usersPage.items)}">
+        <td colspan="6">No users yet</td>
+    </tr>
+    <tr th:each="u : ${usersPage.items}">
+        <td th:text="${u.id}"></td>
+        <td th:text="${u.name}"></td>
+        <td th:text="${u.lastName}"></td>
+        <td th:text="${u.email}"></td>
+        <td th:text="${u.birthDate}"></td>
+        <td>
+        <a th:href="@{/users/{id}(id=${u.id})}">Open</a>
+
+        <form th:action="@{/users/{id}/delete(id=${u.id})}"
+              method="post"
+              style="display:inline">
+            <button type="submit" onclick="return confirm('Delete this user?')">
+                Delete
+            </button>
+        </form>
+    </td>
+    </tr>
+    </tbody>
+</table>
+<div>
+    <a th:if="${usersPage.page > 1}"
+       th:href="@{/users(page=${usersPage.page - 1}, size=${usersPage.size})}">
+        Prev
+    </a>
+
+    <span th:text="'Page ' + ${usersPage.page} + ' of ' + ${usersPage.totalPages}"></span>
+
+    <a th:if="${usersPage.page < usersPage.totalPages}"
+       th:href="@{/users(page=${usersPage.page + 1}, size=${usersPage.size})}">
+        Next
+    </a>
+</div>
+<h3>Create new user</h3>
+<form th:action="@{/users}" th:object="${newUser}" method="post">
+    <div>
+        <label>Name:</label>
+        <input type="text" th:field="*{name}" required />
+    </div>
+
+    <div>
+        <label>Last name:</label>
+        <input type="text" th:field="*{lastName}" required />
+    </div>
+
+    <div>
+        <label>Email:</label>
+        <input type="email" th:field="*{email}" required />
+    </div>
+
+    <div>
+        <label>Birth date:</label>
+        <input type="date" th:field="*{birthDate}" required />
+    </div>
+
+    <button type="submit">Create</button>
+</form>
+</body>
+</html>

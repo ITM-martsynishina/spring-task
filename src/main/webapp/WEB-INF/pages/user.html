@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+
+<h2>Edit user</h2>
+
+<form th:action="@{/users/{id}/update(id=${user.id})}"
+      th:object="${user}"
+      method="post">
+
+    <div>
+        <label>Name:</label>
+        <input type="text" th:field="*{name}" required />
+    </div>
+
+    <div>
+        <label>Last name:</label>
+        <input type="text" th:field="*{lastName}" required />
+    </div>
+
+    <div>
+        <label>Email:</label>
+        <input type="email" th:field="*{email}" required />
+    </div>
+
+    <div>
+        <label>Birth date:</label>
+        <input type="date" th:field="*{birthDate}" />
+    </div>
+
+    <button type="submit">Update</button>
+</form>
+
+<form th:action="@{/users/{id}/delete(id=${user.id})}"
+      method="post"
+      style="margin-top: 12px;">
+    <button type="submit" onclick="return confirm('Delete this user?')">
+        Delete
+    </button>
+</form>
+
+<p>
+    <a th:href="@{/users}">Back</a>
+</p>
+
+</body>
+</html>

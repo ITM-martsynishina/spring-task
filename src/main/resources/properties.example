@@ -1,0 +1,9 @@
+# PostgreSQL properties
+db.driver=org.postgresql.Driver
+db.url=your_url
+db.username=your_name
+db.password=your_password
+
+# Hibernate properties
+hibernate.show_sql=true
+hibernate.hbm2ddl.auto=update
